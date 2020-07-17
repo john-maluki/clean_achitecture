@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trivia/features/number_trivia/presentation/provider/number_trivia_provider.dart';
 import 'features/number_trivia/presentation/pages/number_trivia_page.dart';
+import 'features/number_trivia/presentation/pages/number_trivia_page_p.dart';
 import 'injection_container.dart' as di;
+import 'injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +21,14 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green.shade800,
         accentColor: Colors.green.shade600,
       ),
-      home: NumberTriviaPage(),
+      home: ChangeNotifierProvider<NumberTriviaProviderImpl>(
+        create: (context) => NumberTriviaProviderImpl(
+          concrete: sl(),
+          random: sl(),
+          inputConverter: sl(),
+        ),
+        child: NumberTriviaProScreen(),
+      ),
     );
   }
 }
